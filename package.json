@@ -12,5 +12,11 @@
     "build": "nuxt build",
     "start": "nuxt start",
     "generate": "nuxt generate"
+  },
+  "devDependencies": {
+    "pug": "^2.0.0-beta10",
+    "pug-loader": "^2.3.0",
+    "stylus": "^0.54.5",
+    "stylus-loader": "^2.4.0"
   }
 }
