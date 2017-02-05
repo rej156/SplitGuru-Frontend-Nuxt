@@ -6,14 +6,17 @@ const store = new Vuex.Store({
     writerIndex: null
   },
   mutations: {
-    preloadWriter (store, writerToFillInFor) {
-      store.writer = writerToFillInFor
+    preloadWriter (state, writerToFillInFor) {
+      state.writer = writerToFillInFor
     },
-    preloadWriterIndex (store, writerToFillInForIndex) {
-      store.writerIndex = writerToFillInForIndex
+    preloadWriterIndex (state, writerToFillInForIndex) {
+      state.writerIndex = writerToFillInForIndex
     },
-    preloadSongTitle (store, songTitle) {
-      store.songTitle = songTitle
+    preloadSongTitle (state, songTitle) {
+      state.songTitle = songTitle
+    },
+    updateWriter (state, writer) {
+      state.writer = writer
     }
   }
 })
