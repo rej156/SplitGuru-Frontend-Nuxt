@@ -5,7 +5,10 @@
   "author": "ericjohnjuta@gmail.com ",
   "private": true,
   "dependencies": {
-    "nuxt": "latest"
+    "firebase": "^3.6.8",
+    "firebase-admin": "^4.1.0",
+    "jsonwebtoken": "^7.2.1",
+    "nuxt": "^0.9.7"
   },
   "scripts": {
     "dev": "nuxt",

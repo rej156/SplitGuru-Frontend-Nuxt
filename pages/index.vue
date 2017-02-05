@@ -1,12 +1,10 @@
-<template lang="pug">
-  section.container
-    img.logo(src="../assets/img/logo.png")
+<template lang='pug'>
+  section
+    img.logo(src='../assets/img/logo.png')
     h1.title Universal Vue.js Application Framework
-    input(v-model="message" placeholder="edit me")
+    input(v-model='message' placeholder='edit me')
     p Message is {{message}}
-    <nuxt-link class="button" to="/about">
-      About page
-    </nuxt-link>
+    nuxt-link.button(to='/about') About page
 </template>
 
 <script>
@@ -17,7 +15,7 @@
   }
 </script>
 
-<style scoped lang="stylus">
+<style scoped lang='stylus'>
   .title
     margin: 50px 0
 </style>
