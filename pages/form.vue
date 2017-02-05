@@ -32,11 +32,6 @@
         br
         select(id='Pro' v-model='Pro')
           option(v-for='proOption in proOptions' @value='proOption') {{proOption}}
-        br
-        label(for='Email') Email
-        br
-        input(type='email' id='Email' v-model='Email')
-        p(v-if="!Email.length") Email address is required!
     div.layout.horizontal
       nuxt-link(to='/next')
         button(@click='updateWriter') Next

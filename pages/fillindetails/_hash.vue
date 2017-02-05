@@ -28,6 +28,8 @@ export default {
       const songTitleRef = await firebase().database().ref(splitsheetRef + '/songTitle').once('value')
       const songTitle = songTitleRef.val()
 
+
+      store.commit('setHash', hash)
       store.commit('preloadWriter', writerToFillInFor)
       store.commit('preloadSongTitle', songTitle)
       store.commit('preloadWriterIndex', writerIndex)
