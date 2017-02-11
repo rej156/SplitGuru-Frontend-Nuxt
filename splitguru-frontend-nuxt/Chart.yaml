@@ -1,0 +1,8 @@
+name: splitguru-frontend-nuxt
+apiVersion: v1
+version: 0.1.0
+description: Splitguru Frontend Nuxt Chart
+maintainers:
+  - name: Eric Juta
+    email: ericjohnjuta@gmail.com
+engine: gotpl

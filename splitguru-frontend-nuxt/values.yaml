@@ -1,0 +1,7 @@
+# Default values for Helm-Chart.
+# This is a YAML-formatted file.
+# Declare name/value pairs to be passed into your templates.
+# name: value
+
+image: "gcr.io/splitguru-154114/splitguru-frontend-nuxt"
+dockerTag: "latest"

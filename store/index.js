@@ -30,7 +30,7 @@ const store = new Vuex.Store({
       const { LegalName, ArtistName, ContributionType, Pro, IdentificationNumber, Publisher, Signature } = details
       const writer = {  LegalName, ArtistName, ContributionType, Pro, IdentificationNumber, Publisher, Signature  }
       try {
-        const result = await superagent.put(process.env.API_URL || `http://localhost:8080/fillindetails/${hash}`)
+        const result = await superagent.put(`http://api.split.guru/fillindetails/${hash}`)
           .set('Content-Type', 'application/json')
           .send({ writer })
         console.log(result)

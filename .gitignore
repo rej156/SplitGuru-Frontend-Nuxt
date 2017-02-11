@@ -10,3 +10,4 @@ npm-debug.log
 # Nuxt generate
 dist
 splitsheet-firebase.json
+.DS_Store
