@@ -1,0 +1,22 @@
+build: 
+  box: node
+  steps:
+    - script:
+        name: install deps
+        code: npm install
+    - script:
+        name: build src
+        code: npm run build
+
+deploy:
+  box: node
+  steps:
+    - internal/docker-push:
+        working-dir: $WERCKER_ROOT
+        cmd: npm run start
+        port: "3000"
+        tag: $WERCKER_GIT_COMMIT
+        username: _json_key
+        password: $GCP_KEY_JSON
+        repository: $GCR_TAG
+        registry: $GCR_HOST
