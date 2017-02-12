@@ -20,3 +20,20 @@ deploy:
         password: $GCP_KEY_JSON
         repository: $GCR_TAG
         registry: $GCR_HOST
+    - riceo/kubectl:
+        name: Install kubectl
+        gcloud-key-json: $GCP_KEY_JSON
+        gke-cluster-name: $GCP_CLUSTER_NAME
+        gke-cluster-zone: $GCP_CLUSTER_ZONE
+        gke-cluster-project: $GCP_CLUSTER_PROJECT
+        command: version # this is just to complain with the required argument
+    - script:
+        name: Install helm
+        code: |
+          mkdir -p helm
+          curl http://storage.googleapis.com/kubernetes-helm/helm-v2.1.3-linux-amd64.tar.gz | tar zxv -C helm
+          mv helm/linux-amd64/helm /usr/local/bin/helm
+          helm init -c
+    - script:
+        name: Deploying with helm upgrade
+        code: helm upgrade --install splitguru-nuxt ./deploy --set dockerTag=gcr.io/splitguru-154114/splitguru-frontend-nuxt:$WERCKER_GIT_COMMIT
