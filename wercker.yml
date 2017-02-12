@@ -36,4 +36,4 @@ deploy:
           helm init -c
     - script:
         name: Deploying with helm upgrade
-        code: helm upgrade --install splitguru-nuxt ./deploy --set dockerTag=gcr.io/splitguru-154114/splitguru-frontend-nuxt:$WERCKER_GIT_COMMIT
+        code: helm upgrade --install splitguru-nuxt ./deploy --set dockerTag=$WERCKER_GIT_COMMIT
