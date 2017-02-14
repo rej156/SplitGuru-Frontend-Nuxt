@@ -1,5 +1,5 @@
 <template lang='pug'>
-  div.layout.vertical.center
+  div.layout.vertical.center.content
     h1 Please fill in your details!
     form.layout.horizontal
       div.column
@@ -25,14 +25,15 @@
       div.column
         label(for='PublishingPercentage') Publishing Percentage
         br
-        input(type='number' min=1 max=99 id='PublishingPercentage' v-model='PublishingPercentage')
+        input(disabled type='number' min=1 max=99 id='PublishingPercentage' v-model='PublishingPercentage')
         p(v-if="PublishingPercentage > 99 || PublishingPercentage < 1") Publishing Percentage is min 1, max 100!
         br
         label(for='Pro') Pro
         br
         select(id='Pro' v-model='Pro')
           option(v-for='proOption in proOptions' @value='proOption') {{proOption}}
-    div.layout.horizontal
+    div.layout.horizontal.buttons
+      button(@click='goBack') Back
       nuxt-link(to='/next')
         button(@click='updateWriter') Next
 </template>
@@ -59,5 +60,9 @@ export default {
 
 <style scoped lang='stylus'>
 .column
-  margin-right: 20px
+  margin-right 20px
+.content
+  margin-top 50px
+.buttons
+  margin-top 30px
 </style>

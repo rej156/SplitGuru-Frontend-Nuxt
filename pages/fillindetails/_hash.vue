@@ -1,12 +1,13 @@
 <template lang='pug'>
-  div.layout.vertical.center
+  div.layout.vertical.center.content
     h1 Split Guru
     p You've been invited to {{ songTitle }}'s split sheet.
-    p Quickly and easily fill in a few detials, then you're done!
-    nuxt-link(to='/form')
-      button Enter Split
-    p Already have an account?
-    button Login
+    p Quickly and easily fill in a few details, then you're done!
+    div.layout.vertical.center.bottom
+      nuxt-link(to='/form')
+        button Enter Split
+      p Already have an account?
+      button Login
 
 </template>
 
@@ -41,6 +42,9 @@ export default {
 }
 </script>
 
-<style>
-
+<style scoped lang='stylus'>
+  .content
+    margin-top 50px
+  .bottom
+    margin-top 25px
 </style>

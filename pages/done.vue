@@ -18,7 +18,7 @@
       div.layout.start
         button(@click='goBack') Join
       div.layout.end
-        button(@click='submitDetails') No thanks
+        button(@click='goHome') No thanks
 </template>
 
 <script>
@@ -27,6 +27,12 @@ export default {
     return { Password: '' }
   },
   methods: {
+    goBack() {
+      window.history.go(-1)
+    },
+    goHome() {
+      window.location = 'http://start.split.guru'
+    }
   }
 }
 </script>

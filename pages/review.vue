@@ -29,7 +29,7 @@
       div.column
         label(for='PublishingPercentage') Publishing Percentage
         br
-        input(type='number' min=1 max=99 id='PublishingPercentage' v-model='PublishingPercentage')
+        input(disabled type='number' min=1 max=99 id='PublishingPercentage' v-model='PublishingPercentage')
         p(v-if="PublishingPercentage > 99 || PublishingPercentage < 1") Publishing Percentage is min 1, max 100!
         br
         label(for='Pro') Pro
@@ -47,7 +47,7 @@
         input(id='Signature' v-model='Signature')
         p(v-if="!Signature.length") Signature is required!
         br
-    div.layout.horizontal
+    div.layout.horizontal.buttons
       button(@click='goBack') Back
       button(@click='submitDetails') Submit
 </template>
@@ -78,5 +78,7 @@ export default {
 
 <style scoped lang='stylus'>
   .title
-    margin: 50px 0
+    margin 50px 0
+  .buttons
+    margin-top 30px
 </style>

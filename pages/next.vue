@@ -1,5 +1,5 @@
 <template lang='pug'>
-  div.layout.vertical.center
+  div.layout.vertical.center.content
     form
       label(for='IdentificationNumber') CAE | IPI | SSN
       br
@@ -16,7 +16,7 @@
       input(id='Signature' v-model='Signature')
       p(v-if="!Signature.length") Signature is required!
       br
-    div.layout.horizontal
+    div.layout.horizontal.buttons
       nuxt-link(to='/form')
         button Back
       nuxt-link(to='/review')
@@ -39,4 +39,8 @@ export default {
 </script>
 
 <style scoped lang='stylus'>
+  .content
+    margin-top 100px
+  .buttons
+    margin-top 30px
 </style>
