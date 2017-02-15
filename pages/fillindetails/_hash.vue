@@ -7,7 +7,7 @@
       nuxt-link(to='/form')
         button Enter Split
       p Already have an account?
-      button Login
+      u Login
 
 </template>
 
@@ -44,7 +44,9 @@ export default {
 
 <style scoped lang='stylus'>
   .content
-    margin-top 50px
+    margin-top 100px
   .bottom
     margin-top 25px
+  u
+    text-transform uppercase
 </style>
