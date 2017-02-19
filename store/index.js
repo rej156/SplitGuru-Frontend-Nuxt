@@ -6,7 +6,9 @@ const store = new Vuex.Store({
     writer: {},
     writerIndex: null,
     hash: '',
-    userLoggedIn: false
+    alreadyHasAccount: false,
+    userLoggedIn: false,
+    wrongPassword: false
   },
   mutations: {
     setHash (state, hash) {
@@ -23,6 +25,12 @@ const store = new Vuex.Store({
     },
     updateWriter (state, writer) {
       state.writer = writer
+    },
+    alreadyHasAccount (state) {
+      state.alreadyHasAccount = true
+    },
+    wrongPassword(state) {
+      state.wrongPassword = true
     }
   },
   actions: {
@@ -52,7 +60,7 @@ const store = new Vuex.Store({
           store.dispatch('userLoggedIn')
           return true
         } catch(e) {
-          if (e.message === "auth/email-already-in-use") alert('Email already in use')
+          if (e.code === "auth/email-already-in-use") store.commit('alreadyHasAccount')
           console.error(e)
           return false
         }
@@ -60,6 +68,25 @@ const store = new Vuex.Store({
     },
     userLoggedIn(store) {
       store.state.userLoggedIn = true
+    },
+    wrongPassword(store) {
+      store.state.wrongPassword = true
+    },
+    async login(store, Password) {
+      const { writer } = store.state
+      if (process.BROWSER_BUILD) {
+        try {
+          const { fbWebClient } = require('../utils/firebase.js')
+          await fbWebClient().auth().signInWithEmailAndPassword(writer.Email, Password)
+          store.dispatch('userLoggedIn')
+          return true
+        } catch(e) {
+          if (e.code === "auth/wrong-password") store.commit('wrongPassword')
+          console.error(e)
+          return false
+        }
+      }
+
     }
   }
 })

@@ -6,7 +6,7 @@
     div.layout.vertical.center.bottom
       nuxt-link(to='/form')
         button Enter Split
-      div.login(v-if='userLoggedIn')
+      div.login(v-if='!userLoggedIn')
         p Already have an account?
         u Login
       div.login(v-else)
