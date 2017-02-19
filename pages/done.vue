@@ -3,7 +3,7 @@
     div
       h1 DONE!
       p You will be emailed a completed PDF once all writers approve splits.
-    div(v-if='!alreadyHasAccount')
+    div(v-if='!alreadyHasAccount && !userLoggedIn')
       h1 Create Account
       p Create a password to never fill this out again and keep a record of all of your splits.
       p Moving forward you'll only need to approve percentages and get back to creating.
@@ -14,7 +14,7 @@
         input(id='Password' type='password' v-model='Password')
         br
         u Terms
-    div.MyAccount(v-if='userLoggedIn')
+    div.MyAccount(v-else-if='userLoggedIn')
       nuxt-link(to='/account') My Account
     div(v-else)
       h1(v-if='wrongPassword') Wrong Password!

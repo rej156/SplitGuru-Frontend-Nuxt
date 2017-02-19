@@ -5,13 +5,14 @@
 
 <script>
   export default {
-    mounted(context) {
+    async mounted(context) {
       if (process.BROWSER_BUILD) {
         try {
           const { fbWebClient } = require('../utils/firebase.js')
-          fbWebClient().auth().onAuthStateChanged((user) => {
+          fbWebClient().auth().onAuthStateChanged(async (user) => {
             if (user) {
               this.$store.dispatch('userLoggedIn')
+              await this.$store.dispatch('fetchWriter', user.email)
             }
           })
         } catch(e) {

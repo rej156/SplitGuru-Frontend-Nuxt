@@ -11,22 +11,22 @@ const store = new Vuex.Store({
     wrongPassword: false
   },
   mutations: {
-    setHash (state, hash) {
+    setHash(state, hash) {
       state.hash = hash
     },
-    preloadWriter (state, writerToFillInFor) {
+    preloadWriter(state, writerToFillInFor) {
       state.writer = writerToFillInFor
     },
-    preloadWriterIndex (state, writerToFillInForIndex) {
+    preloadWriterIndex(state, writerToFillInForIndex) {
       state.writerIndex = writerToFillInForIndex
     },
-    preloadSongTitle (state, songTitle) {
+    preloadSongTitle(state, songTitle) {
       state.songTitle = songTitle
     },
-    updateWriter (state, writer) {
+    updateWriter(state, writer) {
       state.writer = writer
     },
-    alreadyHasAccount (state) {
+    alreadyHasAccount(state) {
       state.alreadyHasAccount = true
     },
     wrongPassword(state) {
@@ -55,7 +55,8 @@ const store = new Vuex.Store({
           const acc = await fbWebClient().auth().createUserWithEmailAndPassword(writer.Email, Password)
           const { providerData } = await fbWebClient().auth().currentUser
           await fbWebClient().database().ref("/users").child(providerData[0].uid.replace('.', ',')).set({
-             provider: 'password'
+            ...writer,
+            provider: 'password'
           })
           store.dispatch('userLoggedIn')
           return true
@@ -86,7 +87,18 @@ const store = new Vuex.Store({
           return false
         }
       }
-
+    },
+    async fetchWriter(store, uid) {
+      const { fbWebClient } = require('../utils/firebase.js')
+      try {
+        const writerRef = await fbWebClient().database().ref(`/users/${uid.replace('.', ',')}`).once('value')
+        const writer = writerRef.val()
+        store.commit('preloadWriter', writer)
+      } catch(e) {
+        if (e.code === "auth/wrong-password") store.commit('wrongPassword')
+        console.error(e)
+        return false
+      }
     }
   }
 })
