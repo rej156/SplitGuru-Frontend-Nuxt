@@ -4,13 +4,22 @@
 </template>
 
 <script>
-// import MyFooter from '~components/Footer.vue'
-
-// export default {
-//   components: {
-//     MyFooter
-//   }
-// }
+  export default {
+    mounted(context) {
+      if (process.BROWSER_BUILD) {
+        try {
+          const { fbWebClient } = require('../utils/firebase.js')
+          fbWebClient().auth().onAuthStateChanged((user) => {
+            if (user) {
+              this.$store.dispatch('userLoggedIn')
+            }
+          })
+        } catch(e) {
+          console.error(e)
+        }
+      }
+    }
+  }
 </script>
 
 <style lang='stylus'>

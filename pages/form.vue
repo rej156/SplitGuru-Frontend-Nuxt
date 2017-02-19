@@ -58,7 +58,7 @@ export default {
 }
 </script>
 
-<style scoped lang='stylus'>
+<style scoped lang="stylus">
 .column
   margin-right 20px
 .content

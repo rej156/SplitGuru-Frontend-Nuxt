@@ -1,4 +1,4 @@
-<template lang='pug'>
+<template lang="pug">
   div.layout.vertical.center
     div
       h1 DONE!
@@ -11,31 +11,37 @@
       div
         label(for='Password') Password
         br
-        input(id='Password' v-model='Password')
+        input(id='Password' type='password' v-model='Password')
         br
         u Terms
     div.layout.horizontal
       div.layout.start
-        button(@click='goBack') Join
+        button(@click='createAccount') Join
+        button(@click='logAccount') Account Info
       div.layout.end
         button(@click='goHome') No thanks
 </template>
 
 <script>
 export default {
-  data({store}) {
-    return { Password: '' }
-  },
+  data: () => ({ Password: '' }),
   methods: {
     goBack() {
       window.history.go(-1)
     },
     goHome() {
       window.location = 'http://start.split.guru'
+    },
+    async createAccount() {
+      const userLoggedIn = await this.$store.dispatch('createAccount', this._data.Password)
+      if (userLoggedIn) this.$router.push('/account')
+    },
+    logAccount() {
+      console.log(require('../utils/firebase.js').fbWebClient().auth())
     }
   }
 }
 </script>
 
-<style>
+<style lang="stylus">
 </style>

@@ -5,7 +5,8 @@ const store = new Vuex.Store({
   state: {
     writer: {},
     writerIndex: null,
-    hash: ''
+    hash: '',
+    userLoggedIn: false
   },
   mutations: {
     setHash (state, hash) {
@@ -37,6 +38,28 @@ const store = new Vuex.Store({
       } catch(e) {
         console.error(e)
       }
+    },
+    async createAccount(store, Password) {
+      const { writer } = store.state
+      if (process.BROWSER_BUILD) {
+        try {
+          const { fbWebClient } = require('../utils/firebase.js')
+          const acc = await fbWebClient().auth().createUserWithEmailAndPassword(writer.Email, Password)
+          const { providerData } = await fbWebClient().auth().currentUser
+          await fbWebClient().database().ref("/users").child(providerData[0].uid.replace('.', ',')).set({
+             provider: 'password'
+          })
+          store.dispatch('userLoggedIn')
+          return true
+        } catch(e) {
+          if (e.message === "auth/email-already-in-use") alert('Email already in use')
+          console.error(e)
+          return false
+        }
+      }
+    },
+    userLoggedIn(store) {
+      store.state.userLoggedIn = true
     }
   }
 })
