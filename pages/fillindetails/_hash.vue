@@ -1,4 +1,4 @@
-<template lang='pug'>
+<template lang="pug">
   div.layout.vertical.center.content
     h1 Split Guru
     p You've been invited to {{ songTitle }}'s split sheet.
@@ -6,14 +6,17 @@
     div.layout.vertical.center.bottom
       nuxt-link(to='/form')
         button Enter Split
-      p Already have an account?
-      u Login
+      div.login(v-if='userLoggedIn')
+        p Already have an account?
+        u Login
+      div.login(v-else)
+        nuxt-link(to='/account') My Account
 
-</template>
+</template>)
 
 <script>
 if (process.SERVER_BUILD) {
-  var { decode } = require('jsonwebtoken') 
+  var { decode } = require('jsonwebtoken')
   var firebase = require('../../utils/firebase.js').default
 }
 
@@ -37,16 +40,19 @@ export default {
     }
   },
   computed: {
-    songTitle () { return this.$store.state.songTitle }
+    songTitle () { return this.$store.state.songTitle },
+    userLoggedIn() { return this.$store.state.userLoggedIn }
   }
 }
 </script>
 
-<style scoped lang='stylus'>
+<style scoped lang="stylus">
   .content
     margin-top 100px
   .bottom
     margin-top 25px
   u
     text-transform uppercase
+  .login
+    margin-top 50px
 </style>
