@@ -2,10 +2,10 @@
   div.SplitsheetsInfoData
     div.StatusAwaiting
     div.SongNameData
-      p.SongName {{splitsheet.songName}}
+      p.SongName {{splitsheet.songTitle}}
       button.ExpandInfo +
-    p 13/06/1994
-    p 100 %
+    p API TBA
+    p {{ publishingPercentage }}%
     div.ClickOptions
       span.EditButton Edit
       span.ResendButton Resend
@@ -14,7 +14,13 @@
 
 <script>
   export default {
-    props: [ 'splitsheet' ]
+    props: [ 'splitsheet', 'i' ],
+    computed: {
+      publishingPercentage() {
+        return this.$store.state.splitsheets[this.i].writers
+          .find(({ Email }) => Email === this.$store.state.userLoggedIn)['PublishingPercentage']
+      }
+    }
   }
 </script>
 

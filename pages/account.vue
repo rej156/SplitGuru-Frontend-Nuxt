@@ -19,7 +19,8 @@
         h4 Date
         h4 Pub %
         h4 Click Options
-      SplitsheetInfo(v-for='splitsheet in splitsheets' v-bind:splitsheet='splitsheet')
+      SplitsheetInfo(v-for='(splitsheet, i) in splitsheets' v-bind:splitsheet='splitsheet' v-bind:i='i')
+
 </template>
 
 <script>
@@ -29,16 +30,9 @@
     components: {
       SplitsheetInfo
     },
-    data({store}) {
-      return {
-        splitsheets: [
-          { songName: 'Jimmy Kimmel' },
-          { songName: 'Hotline Bling' }
-        ]
-      }
-    },
     computed: {
-      artistName() { return this.$store.state.writer.ArtistName }
+      artistName() { return this.$store.state.writer.ArtistName },
+      splitsheets() { return this.$store.state.splitsheets }
     }
   }
   </script>

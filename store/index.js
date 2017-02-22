@@ -8,11 +8,15 @@ const store = new Vuex.Store({
     hash: '',
     alreadyHasAccount: false,
     userLoggedIn: false,
-    wrongPassword: false
+    wrongPassword: false,
+    splitsheets: []
   },
   mutations: {
     setHash(state, hash) {
       state.hash = hash
+    },
+    preloadWriterSplitsheets(state, splitsheets) {
+      state.splitsheets = splitsheets
     },
     preloadWriter(state, writerToFillInFor) {
       state.writer = writerToFillInFor
@@ -67,8 +71,8 @@ const store = new Vuex.Store({
         }
       }
     },
-    userLoggedIn(store) {
-      store.state.userLoggedIn = true
+    userLoggedIn(store, uid) {
+      store.state.userLoggedIn = uid
     },
     wrongPassword(store) {
       store.state.wrongPassword = true
@@ -95,6 +99,22 @@ const store = new Vuex.Store({
         const writer = writerRef.val()
         store.commit('preloadWriter', writer)
         console.log(writer)
+      } catch(e) {
+        if (e.code === "auth/wrong-password") store.commit('wrongPassword')
+        console.error(e)
+        return false
+      }
+    },
+    async fetchSplitsheets(store, uid) {
+      const { fbWebClient } = require('../utils/firebase.js')
+      try {
+        const splitsheetsRef = await fbWebClient().database().ref(`/splitsheets`).once('value')
+        const splitsheets = splitsheetsRef.val()
+        const writerSplitsheets = Object.values(splitsheets).filter(({ writers }) => {
+          if (writers) return writers.find(({ Email }) => Email === uid)
+        })
+        store.commit('preloadWriterSplitsheets', writerSplitsheets)
+        console.log(writerSplitsheets)
       } catch(e) {
         if (e.code === "auth/wrong-password") store.commit('wrongPassword')
         console.error(e)
