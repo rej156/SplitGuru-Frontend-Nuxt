@@ -29,7 +29,7 @@
 @import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro');
 
 body
-  background-color #ebebeb
+  background-color #d7d7d7
   font-family Cabin, Source Sans Pro
   font-weight 100
 
