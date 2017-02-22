@@ -4,7 +4,7 @@
       div.Logout
         p Logout
       div.ArtistProfile.layout.horizontal
-        p ArtistName
+        h2.ArtistName {{artistName}}
         button.CreateSplitSheet
           span.PlusSign +
       div.Tabs.layout.horizontal
@@ -30,12 +30,15 @@
       SplitsheetInfo
     },
     data({store}) {
-      return { myData: 'Hello world!',
-               splitsheets: [
-                 { songName: 'Jimmy Kimmel' },
-                 { songName: 'Hotline Bling' }
-               ]
-             }
+      return {
+        splitsheets: [
+          { songName: 'Jimmy Kimmel' },
+          { songName: 'Hotline Bling' }
+        ]
+      }
+    },
+    computed: {
+      artistName() { return this.$store.state.writer.ArtistName }
     }
   }
   </script>
@@ -54,6 +57,8 @@
     margin-left auto
     > p
       text-transform uppercase
+  .ArtistName
+    margin-left 150px
   .CreateSplitSheet
     display block
     height button-dimension

@@ -94,6 +94,7 @@ const store = new Vuex.Store({
         const writerRef = await fbWebClient().database().ref(`/users/${uid.replace('.', ',')}`).once('value')
         const writer = writerRef.val()
         store.commit('preloadWriter', writer)
+        console.log(writer)
       } catch(e) {
         if (e.code === "auth/wrong-password") store.commit('wrongPassword')
         console.error(e)

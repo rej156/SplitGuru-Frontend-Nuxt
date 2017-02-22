@@ -13,6 +13,7 @@
             if (user) {
               this.$store.dispatch('userLoggedIn')
               await this.$store.dispatch('fetchWriter', user.email)
+              //await this.$store.dispatch('fetchSplitsheets', user.email)
             }
           })
         } catch(e) {
