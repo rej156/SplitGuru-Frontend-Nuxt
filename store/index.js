@@ -84,7 +84,7 @@ const store = new Vuex.Store({
           const { fbWebClient } = require('../utils/firebase.js')
           await fbWebClient().auth().signInWithEmailAndPassword(writer.Email, Password)
           const token = await fbWebClient().auth().currentUser.getToken()
-          await superagent.get('http://api.split.guru/verifytoken')
+          await superagent.post('http://api.split.guru/verifytoken')
             .set('Content-Type', 'application/json')
             .set('token', token)
           store.dispatch('userLoggedIn')
