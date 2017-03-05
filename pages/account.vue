@@ -30,6 +30,7 @@
     components: {
       SplitsheetInfo
     },
+    middleware: "auth",
     computed: {
       artistName() { return this.$store.state.writer.ArtistName },
       splitsheets() { return this.$store.state.splitsheets }
