@@ -11,7 +11,7 @@
           const { fbWebClient } = require('../utils/firebase.js')
           fbWebClient().auth().onAuthStateChanged(async (user) => {
             if (user) {
-              this.$store.dispatch('userLoggedIn', user.email)
+              this.$store.commit('userLoggedIn', user.email)
               await this.$store.dispatch('fetchWriter', user.email)
               await this.$store.dispatch('fetchSplitsheets', user.email)
             }

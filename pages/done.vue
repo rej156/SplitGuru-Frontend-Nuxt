@@ -46,9 +46,6 @@ export default {
       if (userLoggedIn) this.$router.push('/account')
       this._data.Password = ''
     },
-    logAccount() {
-      console.log(require('../utils/firebase.js').fbWebClient().auth())
-    },
     async login() {
       const userLoggedIn = await this.$store.dispatch('login', this._data.Password)
       if (userLoggedIn) this.$router.push('/account')

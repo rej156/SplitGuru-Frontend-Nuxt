@@ -35,6 +35,9 @@ const store = new Vuex.Store({
     },
     wrongPassword(state) {
       state.wrongPassword = true
+    },
+    userLoggedIn(state, uid) {
+      state.userLoggedIn = uid
     }
   },
   actions: {
@@ -62,7 +65,13 @@ const store = new Vuex.Store({
             ...writer,
             provider: 'password'
           })
-          store.dispatch('userLoggedIn')
+          await fbWebClient().auth().onAuthStateChanged(async (user) => {
+            if (user) {
+              await store.dispatch('fetchWriter', user.email)
+              await store.dispatch('fetchSplitsheets', user.email)
+              store.commit('userLoggedIn', user.email)
+            }
+          })
           return true
         } catch(e) {
           if (e.code === "auth/email-already-in-use") store.commit('alreadyHasAccount')
@@ -70,9 +79,6 @@ const store = new Vuex.Store({
           return false
         }
       }
-    },
-    userLoggedIn(store, uid) {
-      store.state.userLoggedIn = uid
     },
     wrongPassword(store) {
       store.state.wrongPassword = true
@@ -83,11 +89,17 @@ const store = new Vuex.Store({
         try {
           const { fbWebClient } = require('../utils/firebase.js')
           await fbWebClient().auth().signInWithEmailAndPassword(writer.Email, Password)
-          const token = await fbWebClient().auth().currentUser.getToken()
-          await superagent.post('http://api.split.guru/verifytoken')
-            .set('Content-Type', 'application/json')
-            .set('token', token)
-          store.dispatch('userLoggedIn')
+          await fbWebClient().auth().onAuthStateChanged(async (user) => {
+            if (user) {
+              await store.dispatch('fetchWriter', user.email)
+              await store.dispatch('fetchSplitsheets', user.email)
+              store.commit('userLoggedIn', user.email)
+            }
+          })
+          //const token = await fbWebClient().auth().currentUser.getToken()
+          // await superagent.post('http://api.split.guru/verifytoken')
+          //   .set('Content-Type', 'application/json')
+          //   .set('token', token)
           return true
         } catch(e) {
           if (e.code === "auth/wrong-password") store.commit('wrongPassword')
